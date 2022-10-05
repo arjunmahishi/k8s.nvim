@@ -1,5 +1,7 @@
 -- this file controls how the output is displayed. Currently, there are two
+
 local str_split = require('k8s.utils').str_split
+local log = require('k8s.log').print
 
 local last_output = nil
 local default_filetype = 'text'
@@ -21,7 +23,7 @@ end
 
 local function show_last_output()
   if last_output == nil then
-    print("flow: you haven't run anything yet")
+    log("you haven't run anything yet")
     return
   end
 

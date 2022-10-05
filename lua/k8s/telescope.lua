@@ -10,8 +10,21 @@ local action_state = require "telescope.actions.state"
 
 local default_config_type = 'json'
 
+local function is_valid()
+  if os.getenv('KUBECONFIG') == nil then
+    log('KUBECONFIG has to be set in the environment')
+    return false
+  end
+
+  return true
+end
+
 local function config_maps(namespace)
   return function(opts)
+    if not is_valid() then
+      return
+    end
+
     log("loading config-maps...")
     local config_maps_list = kubectl.get_config_maps(
       os.getenv('KUBECONFIG'), namespace
@@ -46,6 +59,10 @@ end
 
 local function namespaces()
   return function(opts)
+    if not is_valid() then
+      return
+    end
+
     log("loading namespaces...")
     local namespace_list = kubectl.get_namespaces(os.getenv('KUBECONFIG'))
     if namespace_list == nil then
