@@ -57,6 +57,44 @@ local function config_maps(namespace)
   end
 end
 
+local function pods(namespace)
+  return function(opts)
+    if not is_valid() then
+      return
+    end
+
+    log("loading pods...")
+    local pods_list = kubectl.get_pods(
+      os.getenv('KUBECONFIG'), namespace
+    )
+    if pods_list == nil then
+      return true
+    end
+    log("loaded config-maps")
+
+    opts = opts or require("telescope.themes").get_dropdown{}
+    pickers.new(opts, {
+      prompt_title = string.format("Pods in '%s'", namespace),
+      finder = finders.new_table {
+        results = pods_list
+      },
+      sorter = conf.generic_sorter(opts),
+      attach_mappings = function(prompt_bufnr)
+        actions.select_default:replace(function()
+          actions.close(prompt_bufnr)
+          local selection = action_state.get_selected_entry()
+          local pod_details = kubectl.describe_pod(
+            os.getenv('KUBECONFIG'), namespace, selection[1]
+          )
+
+          output.write_to_buffer(pod_details)
+        end)
+        return true
+      end,
+    }):find()
+  end
+end
+
 local function namespaces()
   return function(opts)
     if not is_valid() then
@@ -82,7 +120,7 @@ local function namespaces()
           actions.close(prompt_bufnr)
           local selection = action_state.get_selected_entry()
 
-          config_maps(selection[1])()
+          pods(selection[1])()
         end)
 
         map("i", "<c-c>", function ()
@@ -100,4 +138,5 @@ end
 return {
   namespaces = namespaces(),
   config_maps = config_maps,
+  pods = pods,
 }

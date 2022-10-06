@@ -17,8 +17,9 @@ These are the commands that are available for now. More will be added in the com
 
 | Command | Description |
 |---------|-------------|
-| `:K8sNamespaces` | List all the namespaces in the current cluster <br><br>**Telescope actions**<br> `enter` / `ctrl + c` - list config maps of the namespace |
+| `:K8sNamespaces` | List all the namespaces in the current cluster <br><br>**Telescope actions**<br> `enter` - list all the pods of the namespace <br> `ctrl + c` - list config maps of the namespace |
 | `:K8sConfigMaps <namespace>` | List all the config maps in the given namespace <br><br>**Telescope actions**<br> `enter` - copy the config into a new buffer |
+| `:K8sPods <namespace>` | List all the pods in the given namespace <br><br>**Telescope actions**<br> `enter` - copy the pod description into a new buffer |
 
 ---
 

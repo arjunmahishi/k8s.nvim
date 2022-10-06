@@ -3,6 +3,8 @@ local log = require('k8s.log').print
 local get_namespaces_cmd = 'kubectl get namespaces -o name --kubeconfig %s'
 local get_config_maps_cmd = 'kubectl get configmaps --namespace %s -o name --kubeconfig %s'
 local describe_config_map_cmd = 'kubectl get configmaps %s --namespace %s -o jsonpath="{.data.config}" --kubeconfig %s'
+local get_pods_cmd = 'kubectl get pods --namespace %s -o name --kubeconfig %s'
+local describe_pod_cmd = 'kubectl describe pod %s --namespace %s --kubeconfig %s'
 
 local function get_namespaces(kubeconfig)
   local out = vim.fn.system(string.format(get_namespaces_cmd, kubeconfig))
@@ -54,8 +56,40 @@ local function describe_config_map(kubeconfig, namespace, config_map)
   return out
 end
 
+local function get_pods(kubeconfig, namespace)
+  local out = vim.fn.system(string.format(
+    get_pods_cmd, namespace, kubeconfig
+  ))
+
+  local pods = {}
+  for s in out:gmatch('pod/(%g+)') do
+    table.insert(pods, s)
+  end
+
+  if #pods ~= 0 then
+    return pods
+  end
+
+  if #out == 0 then
+    log("could not find any pods in this namespace")
+    return
+  end
+
+  log(out)
+end
+
+local function describe_pod(kubeconfig, namespace, pod)
+  local out = vim.fn.system(string.format(
+    describe_pod_cmd, pod, namespace, kubeconfig
+  ))
+
+  return out
+end
+
 return {
   get_namespaces = get_namespaces,
   get_config_maps = get_config_maps,
   describe_config_map = describe_config_map,
+  get_pods = get_pods,
+  describe_pod = describe_pod,
 }
