@@ -11,6 +11,14 @@ Neovim plugin that wraps some of the kubectl operations
 export KUBECONFIG=/path/to/config/file
 ```
 
+## Installation
+
+Use you favorite plugin manager. If you use vim-plug, add this to your `init.vim` / `init.lua`
+
+```vim
+Plug 'arjunmahishi/k8s.nvim'
+```
+
 ### Commands
 
 These are the commands that are available for now. More will be added in the coming weeks
