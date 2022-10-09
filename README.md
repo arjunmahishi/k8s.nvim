@@ -2,7 +2,7 @@
 
 Neovim plugin that wraps some of the kubectl operations
 
-### Prerequisites
+## Prerequisites
 
 1. You need to have [Telescope installed](https://github.com/nvim-telescope/telescope.nvim#installation)
 2. You need [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) in your system path
@@ -19,7 +19,7 @@ Use you favorite plugin manager. If you use vim-plug, add this to your `init.vim
 Plug 'arjunmahishi/k8s.nvim'
 ```
 
-### Commands
+## Commands
 
 These are the commands that are available for now. More will be added in the coming weeks
 
