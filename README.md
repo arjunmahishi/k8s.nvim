@@ -1,5 +1,9 @@
 # k8s.nvim
 
+[![Neovim](https://img.shields.io/badge/NeoVim-%2357A143.svg?&style=for-the-badge&logo=neovim&logoColor=white)](https://neovim.io/)
+[![Lua](https://img.shields.io/badge/Lua-blue.svg?style=for-the-badge&logo=lua)](http://www.lua.org)
+[![K8s](https://img.shields.io/badge/Kubernetes-white.svg?style=for-the-badge&logo=kubernetes)](https://kubernetes.io/)
+
 Neovim plugin that wraps some of the kubectl operations
 
 ## Prerequisites
